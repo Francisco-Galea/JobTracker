@@ -8,7 +8,7 @@ API REST para gestionar búsquedas de empleo. Permite registrar postulaciones, h
 
 ## ¿Por qué existe este proyecto?
 
-Buscar trabajo es un proceso que puede volverse caótico rápidamente: postulaciones sin respuesta, entrevistas en distintas etapas, empresas que te contactan semanas después. Este proyecto nació de esa necesidad real: tener un sistema que centralice y mida el proceso.
+Buscar trabajo es un proceso que puede volverse caótico rápidamente: postulaciones sin respuesta, entrevistas en distintas etapas, una cantidad en incremento de medios el cual buscar trabajo (Linkedin, Email, Google Forms, etc),empresas que te contactan semanas después. Este proyecto nació de esa necesidad real: tener un sistema que centralice y mida el proceso.
 
 ---
 
