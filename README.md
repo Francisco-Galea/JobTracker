@@ -171,7 +171,7 @@ Content-Type: application/json
 ## Roadmap
 
 - [x] CRUD de postulaciones con Clean Architecture
-- [ ] Autenticación con JWT
+- [x] Autenticación con JWT
 - [ ] Módulo de análisis y estadísticas
 - [ ] Deploy en Azure
 - [ ] Tests unitarios
