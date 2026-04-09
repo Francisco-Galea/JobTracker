@@ -1,5 +1,7 @@
-﻿using JobTracker.Application.Common.Exceptions;
+﻿using System.Collections;
+using JobTracker.Application.Common.Exceptions;
 using JobTracker.Application.DTOs;
+using JobTracker.Domain.Entities;
 using JobTracker.Domain.Interfaces;
 
 namespace JobTracker.Application.UseCases.UpdateJobApplication
@@ -19,8 +21,8 @@ namespace JobTracker.Application.UseCases.UpdateJobApplication
         {
             var app = await repository.GetByIdAsync(command.Id, cancellationToken);
 
-            if (app is null)
-                throw new NotFoundException(nameof(app), command.Id);
+            if (app is null || app.UserId != command.UserId)
+                throw new NotFoundException(nameof(JobApplication), command.Id);
 
             app.Update(command.Company, command.Position, command.JobUrl, command.Notes);
             app.ChangeStatus(command.Status);

@@ -12,6 +12,9 @@ namespace JobTracker.Infrastructure.Persistence.Configurations
 
             builder.HasKey(x => x.Id);
 
+            builder.Property(x => x.UserId)
+                .IsRequired();
+
             builder.Property(x => x.Id)
                 .ValueGeneratedNever();
 
@@ -31,12 +34,12 @@ namespace JobTracker.Infrastructure.Persistence.Configurations
 
             builder.Property(x => x.Status)
                 .IsRequired()
-                .HasConversion<string>() // Guarda el enum como texto en la DB
+                .HasConversion<string>() 
                 .HasMaxLength(50);
 
             builder.Property(x => x.Status)
                 .IsRequired()
-                .HasConversion<string>() // Guarda el enum como texto en la DB
+                .HasConversion<string>() 
                 .HasMaxLength(50);
 
             builder.Property(x => x.AppliedAt)

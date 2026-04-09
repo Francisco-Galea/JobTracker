@@ -23,9 +23,11 @@ namespace JobTracker.Infrastructure.Persistence.Repositories
         }
 
         public async Task<IEnumerable<JobApplication>> GetAllAsync(
-            CancellationToken cancellationToken = default)
+        Guid userId,
+        CancellationToken cancellationToken = default)
         {
             return await context.JobApplications
+                .Where(x => x.UserId == userId)
                 .OrderByDescending(x => x.AppliedAt)
                 .ToListAsync(cancellationToken);
         }

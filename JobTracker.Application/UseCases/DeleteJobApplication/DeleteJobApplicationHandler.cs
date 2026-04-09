@@ -1,4 +1,5 @@
 ﻿using JobTracker.Application.Common.Exceptions;
+using JobTracker.Domain.Entities;
 using JobTracker.Domain.Interfaces;
 
 namespace JobTracker.Application.UseCases.DeleteJobApplication
@@ -18,8 +19,8 @@ namespace JobTracker.Application.UseCases.DeleteJobApplication
         {
             var app = await repository.GetByIdAsync(command.Id, cancellationToken);
 
-            if (app is null)
-                throw new NotFoundException(nameof(app), command.Id);
+            if (app is null || app.UserId != command.UserId)
+                throw new NotFoundException(nameof(JobApplication), command.Id);
 
             await repository.DeleteAsync(app, cancellationToken);
         }

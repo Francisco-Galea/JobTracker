@@ -5,6 +5,7 @@ namespace JobTracker.Domain.Entities
     public class JobApplication
     {
         public Guid Id { get; private set; }
+        public Guid UserId { get; private set; }
         public string Company { get; private set; } = string.Empty;
         public string Position { get; private set; } = string.Empty;
         public string? JobUrl { get; private set; }
@@ -16,11 +17,15 @@ namespace JobTracker.Domain.Entities
         private JobApplication() { }
 
         public static JobApplication Create(
+            Guid userId,
             string company,
             string position,
             string? jobUrl = null,
             string? notes = null)
         {
+            if (userId == Guid.Empty)
+                throw new ArgumentException("El userId no puede estar vacío.", nameof(userId));
+
             if (string.IsNullOrWhiteSpace(company))
                 throw new ArgumentException("La empresa no puede estar vacía.", nameof(company));
 
@@ -30,6 +35,7 @@ namespace JobTracker.Domain.Entities
             return new JobApplication
             {
                 Id = Guid.NewGuid(),
+                UserId = userId,
                 Company = company.Trim(),
                 Position = position.Trim(),
                 JobUrl = jobUrl?.Trim(),

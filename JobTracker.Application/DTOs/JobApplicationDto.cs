@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using JobTracker.Domain.Enums;
+﻿using JobTracker.Domain.Enums;
 
 namespace JobTracker.Application.DTOs
 {

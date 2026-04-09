@@ -19,6 +19,7 @@ namespace JobTracker.Application.UseCases.CreateJobApplication
         CancellationToken cancellationToken = default)
         {
             var jobApplication = JobApplication.Create(
+                command.UserId,
                 command.Company,
                 command.Position,
                 command.JobUrl,

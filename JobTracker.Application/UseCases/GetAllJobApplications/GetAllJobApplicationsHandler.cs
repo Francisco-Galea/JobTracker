@@ -16,7 +16,7 @@ namespace JobTracker.Application.UseCases.GetAllJobApplications
             GetAllJobApplicationsQuery query,
             CancellationToken cancellationToken = default)
         {
-            var apps = await repository.GetAllAsync(cancellationToken);
+            var apps = await repository.GetAllAsync(query.UserId, cancellationToken);
 
             return apps.Select(app => new JobApplicationDto(
                 app.Id,

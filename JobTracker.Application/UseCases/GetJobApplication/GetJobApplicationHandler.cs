@@ -1,6 +1,6 @@
-﻿using System;
-using JobTracker.Application.Common.Exceptions;
+﻿using JobTracker.Application.Common.Exceptions;
 using JobTracker.Application.DTOs;
+using JobTracker.Domain.Entities;
 using JobTracker.Domain.Interfaces;
 
 namespace JobTracker.Application.UseCases.GetJobApplication
@@ -20,8 +20,8 @@ namespace JobTracker.Application.UseCases.GetJobApplication
         {
             var app = await repository.GetByIdAsync(query.Id, cancellationToken);
 
-            if (app is null)
-                throw new NotFoundException(nameof(app), query.Id);
+            if (app is null || app.UserId != query.UserId)
+                throw new NotFoundException(nameof(JobApplication), query.Id);
 
             return new JobApplicationDto(
                 app.Id,
