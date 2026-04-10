@@ -2,6 +2,7 @@
 using JobTracker.Application.UseCases.CreateJobApplication;
 using JobTracker.Application.UseCases.DeleteJobApplication;
 using JobTracker.Application.UseCases.GetAllJobApplications;
+using JobTracker.Application.UseCases.GetAnalyticsSummary;
 using JobTracker.Application.UseCases.GetJobApplication;
 using JobTracker.Application.UseCases.LoginUser;
 using JobTracker.Application.UseCases.RegisterUser;
@@ -28,6 +29,7 @@ namespace JobTracker.Infrastructure
 
             services.AddScoped<IJobApplicationRepository, JobApplicationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
 
             services.AddScoped<CreateJobApplicationHandler>();
             services.AddScoped<GetJobApplicationHandler>();
@@ -36,6 +38,7 @@ namespace JobTracker.Infrastructure
             services.AddScoped<DeleteJobApplicationHandler>();
             services.AddScoped<RegisterUserHandler>();
             services.AddScoped<LoginUserHandler>();
+            services.AddScoped<GetAnalyticsSummaryHandler>();
 
             return services;
         }
