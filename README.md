@@ -173,8 +173,8 @@ Content-Type: application/json
 - [x] CRUD de postulaciones con Clean Architecture
 - [x] Autenticación con JWT
 - [x] Módulo de análisis y estadísticas
-- [ ] Deploy en Azure
-- [ ] Tests unitarios
+- [x] Deploy en Render
+- [x] Tests unitarios
 
 
 
