@@ -11,14 +11,14 @@ namespace JobTracker.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]                         
+[Authorize]
 public class JobApplicationsController : ControllerBase
 {
-    private readonly CreateJobApplicationHandler createHandler;
-    private readonly GetAllJobApplicationsHandler getAllHandler;
-    private readonly GetJobApplicationHandler getHandler;
-    private readonly UpdateJobApplicationHandler updateHandler;
-    private readonly DeleteJobApplicationHandler deleteHandler;
+    private readonly CreateJobApplicationHandler _createHandler;
+    private readonly GetAllJobApplicationsHandler _getAllHandler;
+    private readonly GetJobApplicationHandler _getHandler;
+    private readonly UpdateJobApplicationHandler _updateHandler;
+    private readonly DeleteJobApplicationHandler _deleteHandler;
 
     public JobApplicationsController(
         CreateJobApplicationHandler createHandler,
@@ -27,11 +27,11 @@ public class JobApplicationsController : ControllerBase
         UpdateJobApplicationHandler updateHandler,
         DeleteJobApplicationHandler deleteHandler)
     {
-        this.createHandler = createHandler;
-        this.getAllHandler = getAllHandler;
-        this.getHandler = getHandler;
-        this.updateHandler = updateHandler;
-        this.deleteHandler = deleteHandler;
+        _createHandler = createHandler;
+        _getAllHandler = getAllHandler;
+        _getHandler = getHandler;
+        _updateHandler = updateHandler;
+        _deleteHandler = deleteHandler;
     }
 
     private Guid GetCurrentUserId() =>
@@ -41,23 +41,16 @@ public class JobApplicationsController : ControllerBase
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var query = new GetAllJobApplicationsQuery(GetCurrentUserId());
-        var result = await getAllHandler.HandleAsync(query, cancellationToken);
+        var result = await _getAllHandler.HandleAsync(query, cancellationToken);
         return Ok(result);
     }
 
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
-        try
-        {
-            var query = new GetJobApplicationQuery(id, GetCurrentUserId());
-            var result = await getHandler.HandleAsync(query, cancellationToken);
-            return Ok(result);
-        }
-        catch (Application.Common.Exceptions.NotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var query = new GetJobApplicationQuery(id, GetCurrentUserId());
+        var result = await _getHandler.HandleAsync(query, cancellationToken);
+        return Ok(result);
     }
 
     [HttpPost]
@@ -66,7 +59,7 @@ public class JobApplicationsController : ControllerBase
         CancellationToken cancellationToken)
     {
         var commandWithUser = command with { UserId = GetCurrentUserId() };
-        var result = await createHandler.HandleAsync(commandWithUser, cancellationToken);
+        var result = await _createHandler.HandleAsync(commandWithUser, cancellationToken);
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 
@@ -79,30 +72,16 @@ public class JobApplicationsController : ControllerBase
         if (id != command.Id)
             return BadRequest(new { message = "El ID de la URL no coincide con el del body." });
 
-        try
-        {
-            var commandWithUser = command with { UserId = GetCurrentUserId() };
-            var result = await updateHandler.HandleAsync(commandWithUser, cancellationToken);
-            return Ok(result);
-        }
-        catch (Application.Common.Exceptions.NotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var commandWithUser = command with { UserId = GetCurrentUserId() };
+        var result = await _updateHandler.HandleAsync(commandWithUser, cancellationToken);
+        return Ok(result);
     }
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        try
-        {
-            var command = new DeleteJobApplicationCommand(id, GetCurrentUserId());
-            await deleteHandler.HandleAsync(command, cancellationToken);
-            return NoContent();
-        }
-        catch (Application.Common.Exceptions.NotFoundException ex)
-        {
-            return NotFound(new { message = ex.Message });
-        }
+        var command = new DeleteJobApplicationCommand(id, GetCurrentUserId());
+        await _deleteHandler.HandleAsync(command, cancellationToken);
+        return NoContent();
     }
 }

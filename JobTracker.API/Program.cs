@@ -1,10 +1,11 @@
-using System.Text;
+using JobTracker.API.Middleware;
 using JobTracker.Infrastructure;
+using JobTracker.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using JobTracker.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +60,7 @@ var app = builder.Build();
 //}
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthentication(); 
 app.UseAuthorization();
 app.MapControllers();
