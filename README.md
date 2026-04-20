@@ -227,6 +227,7 @@ Authorization: Bearer {token}
 - [x] Docker y Docker Compose
 - [x] Tests unitarios
 - [x] Deploy en Render
-- [ ] Middleware global de excepciones
+- [x] Middleware global de excepciones
 - [ ] FluentValidation
 - [ ] Tests de integración
+- [ ] Frontend (en desarrollo)
